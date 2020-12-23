@@ -1,17 +1,31 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <Fact v-bind:fact="fact"/>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Fact from './components/Fact.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Fact
+  },
+  data() {
+        return {
+            fact: {}
+        }
+  },
+  methods: {
+    getFact() {
+        this.axios
+            .get('http://188.225.47.187/api/cats/random-fact.php')
+            .then((response) => {this.fact = response.data})
+    }
+  },
+  mounted() {
+    this.getFact();
   }
 }
 </script>
